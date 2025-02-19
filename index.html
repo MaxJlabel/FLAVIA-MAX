@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome do Site</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(235, 111, 132);
+            font-family: 'Times New Roman', Times, serif;
+            font-size: medium;
+            text-align: center;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        .info {
+            padding: 50px;
+            background-color: rgb(235, 111, 132);
+            color: White;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+            background-color: rgb(235, 111, 132);
+        }
+
+        #imagem {
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+            transition: opacity 1s ease-in-out;
+            opacity: 1;
+        }
+        #contador {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    </style>
+
+    <header>
+        <h1> Bem Vindo (a) ao site da Flavia e do Max</h1>
+        <h2> Nossa História de Amor </h2>
+    </header>
+
+    <br>
+    <hr>
+    <br>
+
+<body>
+    <img id="imagem" src="img/carrosel_inicial/imagem_carrossel (3).jpg" />
+    <br>
+    <br>
+    <hr>
+    <br>
+    <h2> Juntos à: </h2>
+    <br>
+    <br>
+    <div id="contador"> 0 anos, 0 meses, 0 dias, 0h 0m 0s</div>
+    <script>
+        //Lista de imagens
+
+        const imagens = [
+            'img/carrosel_inicial/imagem_carrossel (3).jpg',
+            'img/carrosel_inicial/imagem_carrossel (4).jpg',
+            'img/carrosel_inicial/imagem_carrossel (7).jpg',
+            'img/carrosel_inicial/imagem_carrossel (9).jpg',
+            'img/carrosel_inicial/imagem_carrossel (10).jpg',
+            'img/carrosel_inicial/imagem_carrossel(1).jpg'
+        ];
+
+        let index = 0;
+
+        function trocarImagem() {
+            //primeiro a imagem precisa desaparecer (fade out)
+            const imagem = document.getElementById('imagem');
+            imagem.style.opacity = 0;
+
+            //Aguarda o tempo do fade out (1seg) para mudar a imagem
+
+            setTimeout(() => {
+                index++;
+                if (index >= imagens.length) {
+                    index = 0; //se chegar ao final volta para a primeira imagem
+                }
+                imagem.src = imagens[index];
+
+                //depois de trocar a imagem, a nova imagem aparece (fade in)
+                setTimeout(() => {
+                    imagem.style.opacity = 1;
+                }, 50); //pequeno intervalo antes de começar o fade in 
+            }, 1000); //espera 1 segundo antes de mudar a imagem
+        }
+
+        //trocar de imagem a cada 3 segundos (3000 milisegundos)
+
+        setInterval(trocarImagem, 3000);
+
+        //CONTADOR DE TEMPO
+     //data inicial
+     let dataInicial = new Date("2019-09-07T00:00:00");
+
+     function atualizarContador() {
+        let agora = new Date();
+        let diff = agora - dataInicial; //essa diferença sempre vem em milisegundos
+
+
+        //então agora devemos converter para as unidades de tempo corretas:
+
+        let segundos = Math.floor(diff / 1000) % 60; //aqui dividimos por 1000 para converter para segundos e assim sucetivamente para as demais unidades de tempo
+        let minutos = Math.floor(diff / (1000 * 60)) % 60;
+        let horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+        let dias = Math.floor(diff / (1000 * 60 * 60 * 24)) %30; 
+        let meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30)) % 12; 
+        let anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+
+        //Agora definimos o formato do contador:
+
+        document.getElementById("contador").innerHTML =
+        `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas ${minutos} minutos ${segundos} segundos`;
+      }
+        //Atualizar o contador a cada segundo
+        setInterval(atualizarContador, 1000);
+        
+    </script>
+</body>
+
+</html>
